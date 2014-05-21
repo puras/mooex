@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/puras/mooex",
   "dependencies": {
+    "body-parser": "^1.2.0",
     "compression": "^1.0.2",
     "errorhandler": "^1.0.1",
     "express": "^4.2.0",

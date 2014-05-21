@@ -1,6 +1,7 @@
 path = require 'path'
 resp_time = require 'response-time'
 compression = require 'compression'
+body_parser = require 'body-parser'
 error_handler = require 'errorhandler'
 env = process.env.NODE_ENV || 'development'
 routes = require '../routes'
@@ -13,6 +14,9 @@ module.exports = (app, express) ->
 
     app.enable 'trust proxy'
     app.disable 'x-powered-by'
+
+    app.use body_parser.json()
+    app.use body_parser.urlencoded()
 
     app.use express.static(path.join(app.config.root, 'public'))
     # simple logger
