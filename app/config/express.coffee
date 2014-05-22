@@ -1,5 +1,5 @@
 path = require 'path'
-res_time = require 'response-time'
+resp_time = require 'response-time'
 compression = require 'compression'
 body_parser = require 'body-parser'
 error_handler = require 'errorhandler'
@@ -29,7 +29,7 @@ module.exports = (app, express) ->
 
     if app.get('env') is 'development'
         app.use error_handler()
-        app.use res_time()
+        app.use resp_time()
     else
         app.use compression(
             filter: (req, res) ->
