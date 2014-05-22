@@ -1,6 +1,6 @@
 
 class UsersController
-    list: (req, resp) ->
-        resp.send 'UsersController list method'
+    list: (req, res) ->
+        res.send 'UsersController list method'
 
 module.exports = new UsersController()

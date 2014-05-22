@@ -1,5 +1,5 @@
 path = require 'path'
-resp_time = require 'response-time'
+res_time = require 'response-time'
 compression = require 'compression'
 body_parser = require 'body-parser'
 error_handler = require 'errorhandler'
@@ -15,13 +15,13 @@ module.exports = (app, express) ->
     app.enable 'trust proxy'
     app.disable 'x-powered-by'
 
-    app.use body_parser.json()
-    app.use body_parser.urlencoded()
+    # app.use body_parser.json()
+    # app.use body_parser.urlencoded()
 
     app.use express.static(path.join(app.config.root, 'public'))
     # simple logger
     if app.get('env') is 'development'
-        app.use (req, resp, next) ->
+        app.use (req, res, next) ->
             console.log '%s %s', req.method, req.url
             next()
 
@@ -29,22 +29,22 @@ module.exports = (app, express) ->
 
     if app.get('env') is 'development'
         app.use error_handler()
-        app.use resp_time()
+        app.use res_time()
     else
         app.use compression(
-            filter: (req, resp) ->
+            filter: (req, res) ->
                 /json|text|javascript|css/.test res.getHeader('Content-Type')
             level: 9
         )
 
-    app.use (req, resp, next) ->
+    app.use (req, res, next) ->
         err = new Error('Not Found')
-        resp.status(404).render '404', 
+        res.status(404).render '404', 
             url: req.protocol + '://' + req.headers.host + req.originalUrl
             error: 'Page not found!!!'
 
-    app.use (err, req, resp, next) ->
-        resp.status err.status || 500
-        resp.render '500', 
+    app.use (err, req, res, next) ->
+        res.status err.status || 500
+        res.render '500', 
             message: err.message
             error: {}

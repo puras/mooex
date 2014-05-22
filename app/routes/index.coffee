@@ -5,8 +5,8 @@ config = require '../config/config'
 receiver_controller = require config.root + '/app/controllers/receiver_controller'
 users_controller = require config.root + '/app/controllers/users_controller'
 
-route.get '/', (req, resp, next) ->
-    resp.render 'index'
+route.get '/', (req, res, next) ->
+    res.render 'index'
 route
     .get '/receiver', receiver_controller.receiver
     .post '/receiver', receiver_controller.receiver
